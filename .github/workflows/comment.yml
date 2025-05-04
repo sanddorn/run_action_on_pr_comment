@@ -33,11 +33,11 @@ jobs:
           echo "Comment Body: ${{ github.event.comment.body }}"
           echo "Pull Request URL: ${{ github.event.issue.pull_request.url }}"
           echo "PR: ${{ toJson(steps.pr_info) }}"
-          echo "Pull Request Ref: ${{ steps.pr_info.outputs.ref }}
+          echo "Pull Request Ref: ${{ steps.pr_info.outputs.ref }}"
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          ref: ${{ github.event.pull_request.head.ref }}
+          ref: ${{ steps.pr_info.outputs.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
       - name: Set up Python
         run: |
