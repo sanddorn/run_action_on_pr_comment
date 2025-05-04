@@ -8,6 +8,10 @@ jobs:
     runs-on: ubuntu-latest
 #    if: github.event.issue.pull_request && contains(github.event.comment.body, '/hello')
     steps:
+      - name: Debug
+        run: |
+          echo "ISSUE: ${{ toJson(github.event.issue) }}"
+          echo "PR Number: ${{ github.event.issue.number }}"
       - name: Get PR info
         id: pr_info
         uses: actions/github-script@v7
