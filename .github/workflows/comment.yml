@@ -21,7 +21,7 @@ jobs:
           script: |
             const pr = await github.rest.pulls.get({
               owner: "${{ github.repository_owner }}",
-              repo: "${{ github.repository }}",
+              repo: "run_action_on_pr_comment",
               pull_number: "${{ github.event.issue.number}}" ,
             });
             core.setOutput("sha", pr.data.head.sha);
