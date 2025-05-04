@@ -20,13 +20,14 @@ jobs:
         with:
           script: |
             const pr = await github.rest.pulls.get({
-              owner: "${{ github.repository_owner }}",
-              repo: "run_action_on_pr_comment",
+              owner: context.repo.owner,
+              repo: context.repo.repo,
               pull_number: "${{ github.event.issue.number}}" ,
             });
             core.setOutput("sha", pr.data.head.sha);
             core.setOutput("ref", pr.data.head.ref);
             core.setOutput("repo", pr.data.head.repo.full_name);
+            console.log("ref: " + pr.data.head.ref);
       - name: Debug
         run: |
           echo "Event: ${{ toJson(github.event) }}"
