@@ -28,7 +28,7 @@ jobs:
           echo "Event Type: ${{ github.event.action }}"
           echo "Comment Body: ${{ github.event.comment.body }}"
           echo "Pull Request URL: ${{ github.event.issue.pull_request.url }}"
-          echo "Pull Request Ref: ${{ pr_info.ref }}"
+          echo "Pull Request Ref: ${{ steps.pr_info.output.ref }}"
       - name: Checkout
         uses: actions/checkout@v3
         with:
