@@ -12,14 +12,16 @@ jobs:
         run: |
           echo "ISSUE: ${{ toJson(github.event.issue) }}"
           echo "PR Number: ${{ github.event.issue.number }}"
+          echo "Repo: ${{ github.repository }}"
+          echo "Owner: ${{ github.repository_owner }}"
       - name: Get PR info
         id: pr_info
         uses: actions/github-script@v7
         with:
           script: |
             const pr = await github.rest.pulls.get({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
+              owner: "${{ github.repository_owner }}",
+              repo: "${{ github.repository }}",
               pull_number: "${{ github.event.issue.number}}" ,
             });
             core.setOutput("sha", pr.data.head.sha);
