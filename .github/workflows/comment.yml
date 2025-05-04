@@ -20,7 +20,7 @@ jobs:
             const pr = await github.rest.pulls.get({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              pull_number: github.event.issue.number ,
+              pull_number: "${{ github.event.issue.number}}" ,
             });
             core.setOutput("sha", pr.data.head.sha);
             core.setOutput("ref", pr.data.head.ref);
