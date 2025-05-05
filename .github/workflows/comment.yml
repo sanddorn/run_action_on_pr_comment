@@ -8,11 +8,6 @@ jobs:
     runs-on: ubuntu-latest
 #    if: github.event.issue.pull_request && contains(github.event.comment.body, '/hello')
     steps:
-      - name: Debug
-        run: |
-          echo "PR Number: ${{ github.event.issue.number }}"
-          echo "Repo: ${{ github.repository }}"
-          echo "Owner: ${{ github.repository_owner }}"
       - name: Get PR info
         id: pr_info
         uses: actions/github-script@v7
@@ -23,17 +18,20 @@ jobs:
               repo: context.repo.repo,
               pull_number: "${{ github.event.issue.number}}" ,
             });
+            const commits = await github.rest.pulls.listCommits({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: "${{ github.event.issue.number}}" ,
+            });
             core.setOutput("sha", pr.data.head.sha);
             core.setOutput("ref", pr.data.head.ref);
             core.setOutput("repo", pr.data.head.repo.full_name);
+            core.setOutput("base_sha", commits.data[0].parents[0].sha);   
+            console.log("base_sha "+ commits.data[0].parents[0].sha)
       - name: Debug
-        run: |        
-          echo "Event Name: ${{ github.event_name }}"
-          echo "Event Type: ${{ github.event.action }}"
-          echo "Comment Body: ${{ github.event.comment.body }}"
-          echo "Pull Request URL: ${{ github.event.issue.pull_request.url }}"
-          echo "PR: ${{ toJson(steps.pr_info) }}"
-          echo "Pull Request Ref: ${{ steps.pr_info.outputs.ref }}"
+        run: |
+          echo "Parent_SHA: ${{ steps.pr_info_outputs.base_sha }}"
+          echo "Ref: ${{ steps.pr_info.outputs.ref }}"
       - name: Checkout
         uses: actions/checkout@v3
         with:
@@ -57,7 +55,7 @@ jobs:
             **.tiff
           files_ignore: |
             **thumbnail**
-          fetch_depth: 1
+          base_sha: "${{ steps.pr_info.outputs.base_sha }}"
       - name: Find Images With Wrong Orientation
         id: find-images
         env:
