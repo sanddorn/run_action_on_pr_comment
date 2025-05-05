@@ -27,9 +27,6 @@ jobs:
             core.setOutput("ref", pr.data.head.ref);
             core.setOutput("repo", pr.data.head.repo.full_name);
             core.setOutput("base_sha", commits.data[0].parents[0].sha);   
-            console.log("commits.data[0] " + JSON.stringify(commits.data[0]));
-            console.log("commits.data[0].parents " + JSON.stringify(commits.data[0].parents));
-            console.log("commits...parents[0] " + JSON.stringify(commits.data[0].parents[0]));
             console.log("base_sha "+ commits.data[0].parents[0].sha)
       - name: Debug
         run: |
