@@ -64,10 +64,10 @@ jobs:
         run: |
           ALL_CHANGED_IMAGES=$(for image in `echo $ALL_CHANGED_FILES`; do
             if [[ $image == *.jpg || $image == *.jpeg || $image == *.png || $image == *.tif || $image == *.tiff ]]; then
-              echo "$image"
+              echo "$image "
             fi
           done)
-          $GITHUB_WORKSPACE/.github/scripts/checkImageOrientation.py $ALL_CHANGED_IMAGES >> $GITHUB_OUTPUT
+          $GITHUB_WORKSPACE/.github/scripts/checkImageOrientation.py $ALL_CHANGED_FILES >> $GITHUB_OUTPUT
       - name: Correct Image Orientation
         id: correct-image-orientation
         if: ${{ steps.find-images.outputs.wrong_sized_images != '' }}
