@@ -18,10 +18,15 @@ jobs:
               repo: context.repo.repo,
               pull_number: "${{ github.event.issue.number}}" ,
             });
+            const commits = await github.rest.pulls.listCommits({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: "${{ github.event.issue.number}}" ,
+            })
             core.setOutput("sha", pr.data.head.sha);
             core.setOutput("ref", pr.data.head.ref);
             core.setOutput("repo", pr.data.head.repo.full_name);
-            core.setOutput("base_sha", pr.data.base.sha);
+            core.setOutput("base", commits[0].parents.sha);
       - name: Checkout
         uses: actions/checkout@v3
         with:
