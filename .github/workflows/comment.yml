@@ -57,7 +57,7 @@ jobs:
             **.tiff
           files_ignore: |
             **thumbnail**
-          fetch_depth: 1
+          fetch_depth: 0
       - name: Find Images With Wrong Orientation
         id: find-images
         env:
