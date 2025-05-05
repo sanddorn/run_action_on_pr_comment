@@ -6,6 +6,9 @@ on:
 jobs:
   cropimage:
     runs-on: ubuntu-latest
+    permissions: 
+      contents: write
+      issues: read
 #    if: github.event.issue.pull_request && contains(github.event.comment.body, '/hello')
     steps:
       - name: Get PR info
