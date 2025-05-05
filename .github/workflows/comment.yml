@@ -27,6 +27,10 @@ jobs:
             core.setOutput("ref", pr.data.head.ref);
             core.setOutput("repo", pr.data.head.repo.full_name);
             core.setOutput("base_sha", commits.data[0].parents.sha);
+      - name: Debug
+        run: |
+          echo "Parent_SHA: ${{ steps.pr_info_outputs.base_sha }}"
+          echo "Ref: ${{ steps.pr_info.outputs.ref }}"
       - name: Checkout
         uses: actions/checkout@v3
         with:
