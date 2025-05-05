@@ -36,5 +36,5 @@ for image_path in paths:
 if len(wrong_images) != 0:
     imageString = ""
     for image in wrong_images:
-        imageString += image
+        imageString += image + " "
     print(f"wrong_sized_images={imageString}")
