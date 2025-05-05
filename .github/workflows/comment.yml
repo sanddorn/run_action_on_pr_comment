@@ -21,6 +21,7 @@ jobs:
             core.setOutput("sha", pr.data.head.sha);
             core.setOutput("ref", pr.data.head.ref);
             core.setOutput("repo", pr.data.head.repo.full_name);
+            core.setOutput("base_sha", pr.data.base.sha);
       - name: Checkout
         uses: actions/checkout@v3
         with:
@@ -44,6 +45,7 @@ jobs:
             **.tiff
           files_ignore: |
             **thumbnail**
+          base_sha: "${{ steps.pr_info.outputs.base_sha }}"
       - name: Find Images With Wrong Orientation
         id: find-images
         env:
